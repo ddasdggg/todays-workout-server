@@ -21,6 +21,7 @@ public class PostComment {
     @JoinColumn(name = "post_id")
     private Post post;
 
+    @Column(columnDefinition = "LONGTEXT")
     private String content;
 
     @OneToMany(mappedBy = "postComment", orphanRemoval = true)
