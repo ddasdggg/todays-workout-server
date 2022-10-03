@@ -22,7 +22,7 @@ public class SecurityConfiguration {
         http
                 .csrf().disable()
                 .authorizeHttpRequests()
-                .antMatchers("/login", "/registrations", "/css/**").permitAll()
+                .antMatchers("/login", "/registrations/**", "/css/**").permitAll()
                 .anyRequest().authenticated()
                 .and()
                 .formLogin().loginPage("/login").defaultSuccessUrl("/")
