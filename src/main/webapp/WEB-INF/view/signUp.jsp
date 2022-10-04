@@ -63,7 +63,7 @@
 <script type="text/javascript">
     function check_nickname() {
         document.getElementById("nicknameDuplication").value = "unCheck";
-        window.open('/registrations/nickname-check', "_blank", "width=500, height=300, resizable=no, scrollbars=no")
+        window.open('/registrations/nickname-check-form', "_blank", "width=500, height=200, resizable=no, scrollbars=no")
     };
 
     function check_signUp() {
@@ -84,7 +84,7 @@
             return false;
         }
 
-        if (nicknameDuplication == "unCheck") {
+        if (nicknameDuplication != "check") {
             alert("닉네임 중복체크해주세요.");
             return false;
         }

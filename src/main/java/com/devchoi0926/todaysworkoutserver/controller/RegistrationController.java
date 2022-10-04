@@ -8,6 +8,9 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+
+import javax.servlet.http.HttpServletRequest;
+
 @Controller
 @RequestMapping("/registrations")
 @RequiredArgsConstructor
@@ -20,10 +23,18 @@ public class RegistrationController {
         return "signUp";
     }
 
-    @GetMapping("/nickname-check")
-    String nicknameCheckForm(String nickname) {
-        registrationService.nicknameCheck(nickname);
+    @GetMapping("/nickname-check-form")
+    String nicknameCheckForm() {
         return "nicknameCheck";
+    }
+
+    @PostMapping("/nickname-check")
+    String nicknameCheck(String username, HttpServletRequest request, Model model) {
+        System.out.println(username);
+        boolean idCheck = registrationService.nicknameCheck(username);
+        request.setAttribute("idCheck", idCheck);
+        model.addAttribute("url", "/registrations/nickname-check-form");
+        return "redirect";
     }
 
     @PostMapping

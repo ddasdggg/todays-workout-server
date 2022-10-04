@@ -21,16 +21,20 @@ public class RegistrationService {
         SignUpDto signUpDto = new SignUpDto();
         signUpDto.setNickname("user");
         signUpDto.setPassword("1234");
-        signUpDto.setRole("user");
         signUp(signUpDto);
     }
 
-    public void signUp(SignUpDto signUpDto) {
+    public boolean signUp(SignUpDto signUpDto) {
         User user = User.builder()
                 .nickname(signUpDto.getNickname())
                 .password(passwordEncoder.encode(signUpDto.getPassword()))
-                .role("user")
                 .build();
-        userRepository.save(user);
+        user = userRepository.save(user);
+
+        return user != null;
+    }
+
+    public boolean nicknameCheck(String nickname) {
+        return true;
     }
 }
