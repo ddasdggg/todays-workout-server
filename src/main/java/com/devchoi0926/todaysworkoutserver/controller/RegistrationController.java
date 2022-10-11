@@ -8,6 +8,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -29,12 +30,13 @@ public class RegistrationController {
     }
 
     @PostMapping("/nickname-check")
-    String nicknameCheck(String username, HttpServletRequest request, Model model) {
-        System.out.println(username);
+    String nicknameCheck(String username, Model model) {
         boolean idCheck = registrationService.nicknameCheck(username);
-        request.setAttribute("idCheck", idCheck);
-        model.addAttribute("url", "/registrations/nickname-check-form");
-        return "redirect";
+        model.addAttribute("idCheck", idCheck);
+        if (idCheck) {
+            model.addAttribute("username", username);
+        }
+        return "nicknameCheck";
     }
 
     @PostMapping

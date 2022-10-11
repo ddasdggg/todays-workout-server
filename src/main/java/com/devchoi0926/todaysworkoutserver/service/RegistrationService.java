@@ -8,6 +8,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.PostConstruct;
+import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
@@ -19,14 +20,14 @@ public class RegistrationService {
     @PostConstruct
     void initUser() {
         SignUpDto signUpDto = new SignUpDto();
-        signUpDto.setNickname("user");
+        signUpDto.setUsername("user");
         signUpDto.setPassword("1234");
         signUp(signUpDto);
     }
 
     public boolean signUp(SignUpDto signUpDto) {
         User user = User.builder()
-                .nickname(signUpDto.getNickname())
+                .nickname(signUpDto.getUsername())
                 .password(passwordEncoder.encode(signUpDto.getPassword()))
                 .build();
         user = userRepository.save(user);
@@ -35,6 +36,7 @@ public class RegistrationService {
     }
 
     public boolean nicknameCheck(String nickname) {
-        return true;
+        Optional<User> optUser = userRepository.findByNickname(nickname);
+        return optUser.isEmpty();
     }
 }

@@ -15,15 +15,14 @@
 <body>
 <%
     Object result = request.getAttribute("idCheck");
-    String nickname = (String) request.getAttribute("nickname");
-    System.out.println(result);
+    String username = (String) request.getAttribute("username");
 %>
 
 <div class="card-body">
     <form action="/registrations/nickname-check" method="post">
         <div class="form-floating mb-3">
             <input type="text" class="form-control" name="username" id="username"
-                   placeholder="nickname">
+                   placeholder="nickname" value="${username}">
             <label for="username" class="form-label">nickname</label>
             <button type="submit" class="btn btn-dark" onclick="return search_nickname()">검색</button>
         </div>
@@ -32,10 +31,10 @@
             <button type="button" class="btn btn-primary" onclick="window.close()">취소</button>
             <%} else {%>
                 <%if ((boolean) result) { %>
-                <span style="color:blue">해당 ID는 사용이 가능합니다.</span>
+                <span style="color:blue">해당 닉네임은 사용이 가능합니다.</span>
                 <button type="button" class="btn btn-dark" onclick="return use_nickname()">사용하기</button>
                 <%} else { %>
-                <span style="color:red">해당 ID는 이미 사용 중합니다.</span>
+                <span style="color:red">해당 닉네임은 이미 사용 중합니다.</span>
                 <button type="button" class="btn btn-primary" onclick="window.close()">취소</button>
                 <%} %>
             <%} %>
@@ -61,7 +60,8 @@
     }
 
     function use_nickname() {
-        window.opener.document.getElementById('nickname').value = '<%=nickname%>';
+        var username = "${username}";
+        window.opener.document.getElementById('username').value = username;
         window.opener.document.getElementById('nicknameDuplication').value = 'check';
         window.close();
     }
